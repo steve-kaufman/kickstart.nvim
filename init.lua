@@ -169,6 +169,8 @@ vim.o.confirm = true
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
+vim.keymap.set('n', '<leader>ev', '<cmd>e $MYVIMRC<CR>', { desc = '[E]dit [V]imrc (init.lua)' })
+
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
@@ -198,6 +200,11 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left wind
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+vim.keymap.set('n', '<M-h>', '<C-w><', { desc = 'Decrease current window width' })
+vim.keymap.set('n', '<M-j>', '<C-w>-', { desc = 'Decrease current window height' })
+vim.keymap.set('n', '<M-k>', '<C-w>+', { desc = 'Increase current window height' })
+vim.keymap.set('n', '<M-l>', '<C-w>>', { desc = 'Increase current window width' })
 
 -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
 -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
@@ -255,6 +262,19 @@ require('lazy').setup({
   --
   -- Use `opts = {}` to automatically pass options to a plugin's `setup()` function, forcing the plugin to be loaded.
   --
+
+  -- Nvim Tree
+  {
+    'nvim-tree/nvim-tree.lua',
+    config = function()
+      require('nvim-tree').setup()
+      local api = require 'nvim-tree.api'
+
+      vim.keymap.set('n', '<leader>ot', api.tree.open, { desc = '[O]pen Nvim [T]ree' })
+      vim.keymap.set('n', '<leader>qt', api.tree.close, { desc = '[Q]uit Nvim [T]ree' })
+      vim.keymap.set('n', '<leader>tt', api.tree.toggle, { desc = '[T]oggle Nvim [T]ree' })
+    end,
+  },
 
   -- Alternatively, use `config = function() ... end` for full control over the configuration.
   -- If you prefer to call `setup` explicitly, use:
